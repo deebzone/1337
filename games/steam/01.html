@@ -54,20 +54,29 @@
     }
 
     .close-btn {
-      position: absolute;
-      top: 6px;
-      right: 12px;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      color: white;
-      user-select: none;
-    }
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  user-select: none;
+  /* هنا زدنا المسافة باش تبعد على النص */
+  padding: 0;
+  z-index: 1001;
+}
 
     .title {
+	padding-right: 40px; /* يخلي مساحة كافية للزر */
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: 600;
       font-size: 16px;
       margin-bottom: 8px;
@@ -136,6 +145,19 @@
       from { width: 100%; }
       to { width: 0%; }
     }
+	@keyframes pulse-wolf {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.wolf-icon {
+  animation: pulse-wolf 1.8s infinite ease-in-out;
+  display: inline-block;
+  color: #4fc3f7;
+  font-size: 22px;
+  margin-right: 6px;
+}
   </style>
 </head>
 <body>
@@ -193,11 +215,11 @@
 <div id="notification" class="notification">
     <span class="close-btn" onclick="hideNotification()">&times;</span>
    <div class="title">
-  <i class="fab fa-wolf-pack-battalion" style="color:#4fc3f7; font-size:22px;"></i>
-  <span style="font-size: 15px; font-weight: 500;">Welcome to <strong>DeebZone Space</strong></span>
+  <i class="fab fa-wolf-pack-battalion wolf-icon"></i>
+  <span style="font-size: 15px; font-weight: 500;">
+    Welcome to <strong>DeebZone Space</strong>
+  </span>
 </div>
-
-
     <div class="visitor-count">Visitors online: <span id="visitorNumber">0</span></div>
     <div class="link-list">
       <a href="https://steamdb.info" target="_blank">🗃️ SteamDB</a>
