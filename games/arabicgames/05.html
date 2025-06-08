@@ -156,7 +156,9 @@
                                 </div>
                             </div>
                              <div class="header-right-icon">
-                                
+                                <a href="#" class="main-header__search search-toggler">
+                                    <i class="fa-regular fa-magnifying-glass"></i>
+                                </a>
                             </div>
                            <div class="header-button">
                                 
@@ -171,6 +173,16 @@
                 </div>
             </div>
         </header>
+		
+		 <!-- Search Start -->
+        <div class="search-popup" dir="rtl">
+            <div class="search-popup__overlay search-toggler"></div>
+            <div class="search-popup__content">
+                <form role="search" method="get" class="search-popup__form" action="#">
+                    <input type="text" id="search" name="search" placeholder="ابحث هنا...">
+                </form>
+            </div>
+        </div>
 		
 <!-- Cuphead Start -->
         <div class="modal modal-common-wrap fade" id="cuphead_arabic" tabindex="-1" aria-hidden="true">
@@ -1214,7 +1226,23 @@
        </section>
 
          
-        
+          <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search");
+
+    searchInput.addEventListener("input", function () {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      const cards = document.querySelectorAll(".gt-shop-card-item");
+
+      cards.forEach(card => {
+        const title = card.querySelector("h5 a").textContent.toLowerCase();
+        const match = title.includes(searchTerm);
+
+        card.parentElement.style.display = match ? "block" : "none";
+      });
+    });
+  });
+</script>
         
         <!--<< All JS Plugins >>-->
         <script src="assets/js/jquery-3.7.1.min.js"></script>

@@ -5083,7 +5083,7 @@ span {
 }
 @media (max-width: 575px) {
   .header-1 .header-right .header-right-icon .search-toggler {
-    display: none;
+    display: block !important;
   }
 }
 .header-1 .header-right .header-right-icon .game-icon {
@@ -8633,7 +8633,7 @@ span {
 
 .search-popup__form input[type=search]:focus,
 .search-popup__form input[type=text]:focus {
-  color: var(--gt-header);
+  color: #1c1d20;
 }
 
 .search-popup__form .search-btn {
@@ -11730,3 +11730,4 @@ span {
 .gt-testimonial-wrapper-3 .gt-testimonial-image .gt-ratting-content .gt-star {
   color: var(--gt-theme);
 }/*# sourceMappingURL=main.css.map */
+
