@@ -19,7 +19,93 @@
 	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
 	<link rel="stylesheet" href="css/paymentfont.min.css">
 	<link rel="stylesheet" href="css/main.css">
+  <style>
+    .notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 20px 24px 20px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  max-width: 320px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1000;
+  color: #fff; /* لون النص أبيض واضح */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* علامة الإغلاق */
+.close-btn {
+  position: absolute;
+  top: 6px;  /* طلعتها شوية فوق */
+  right: 12px;
+  font-size: 24px; /* زدت الحجم شوية */
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+}
+
+/* عنوان النوتيفيكايشن */
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* إيموجي مع حركة خفيفة */
+.emoji {
+  font-size: 24px; /* حجم أكبر شوي */
+  animation: bounce 2s infinite;
+  display: inline-block;
+}
+
+/* حركة Bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link-list a {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.link-list a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+  </style>
 </head>
 <body>
 	<!-- header -->
@@ -72,6 +158,15 @@
 
 	</header>
 	<!-- end header -->
+	
+<div id="notification" class="notification">
+  <span class="close-btn" onclick="hideNotification()">&times;</span>
+  <div class="title"><span class="emoji">👋</span> Welcome To Our DeebZone!</div>
+  <div class="link-list">
+    <a href="https://mega.nz/file/0cxzlKqY#kqLBbYgEGDeU7ue4rXn9wr2JtWoBuwPt0TqyZcTZyGA" target="_blank">🎮 SteamTools (1.8.16)</a>
+    <a href="https://steamdb.info" target="_blank">🗄️ SteamDb</a>
+  </div>
+</div>
 
 	<!-- page title -->
 	<section class="section section--first section--last section--head" data-bg="img/bg.jpg">
@@ -3882,7 +3977,38 @@
 	</section>
 	<!-- end section -->
 
-	
+	   <script>
+    let notificationTimer;
+
+    window.addEventListener('load', function () {
+      showNotification();
+    });
+
+    function showNotification() {
+      const notification = document.getElementById("notification");
+      notification.classList.add("show");
+
+      // Hide after 6 seconds unless hovered
+      notificationTimer = setTimeout(() => {
+        hideNotification();
+      }, 6000);
+
+      notification.addEventListener("mouseenter", () => {
+        clearTimeout(notificationTimer);
+      });
+
+      notification.addEventListener("mouseleave", () => {
+        notificationTimer = setTimeout(() => {
+          hideNotification();
+        }, 3000);
+      });
+    }
+
+    function hideNotification() {
+      const notification = document.getElementById("notification");
+      notification.classList.remove("show");
+    }
+  </script>
 
 	<!-- JS -->
 	<script src="js/jquery-3.5.1.min.js"></script>
