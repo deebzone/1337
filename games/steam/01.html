@@ -209,7 +209,19 @@
 			</div>
 		</div>
 		
-		
+		<div class="header__wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="header__content">
+							<form action="#" class="header__form">
+                              <input type="text" class="header__input" id="searchInput" placeholder="Search by Name or ID..." />
+                             </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</header>
 	<!-- end header -->
@@ -4099,8 +4111,26 @@ window.addEventListener('load', () => {
 });
 
   </script>
+  
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+  const searchValue = this.value.toLowerCase(); // النص اللي كتب المستخدم بصيغة صغيرة
+  const cards = document.querySelectorAll('.card--catalog'); // جميع البطاقات
 
+  cards.forEach(card => {
+    // نجيب اسم اللعبة و ID ديالها من البطاقة
+    const title = card.querySelector('.card__title h3 a').textContent.toLowerCase();
+    const idText = card.querySelector('.card__title span').textContent.toLowerCase();
 
+    // إذا كان النص الموجود في البحث موجود في الاسم أو في الرقم نعرض البطاقة، وإلا نخفيها
+    if (title.includes(searchValue) || idText.includes(searchValue)) {
+      card.parentElement.style.display = ''; // عرض البطاقة
+    } else {
+      card.parentElement.style.display = 'none'; // إخفاء البطاقة
+    }
+  });
+});
+</script>
 	<!-- JS -->
 	<script src="js/jquery-3.5.1.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
