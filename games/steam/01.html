@@ -208,6 +208,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
 
 	</header>
 	<!-- end header -->
@@ -4042,53 +4044,60 @@
 	 <script>
     let notificationTimer;
 
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-    const visitorNumberEl = document.getElementById("visitorNumber");
+const visitorNumberEl = document.getElementById("visitorNumber");
 
-    function updateVisitorNumber() {
-      const fakeVisitors = getRandomInt(550, 15000);
-      visitorNumberEl.textContent = fakeVisitors.toLocaleString();
-    }
+function updateVisitorNumber() {
+  const fakeVisitors = getRandomInt(550, 15000);
+  visitorNumberEl.textContent = fakeVisitors.toLocaleString();
+}
 
-    function showNotification() {
-      const notification = document.getElementById("notification");
-      notification.classList.add("show");
+function showNotification() {
+  const notification = document.getElementById("notification");
+  notification.classList.add("show");
+  notification.style.display = 'block'; // تأكد أنها مرئية
+  updateVisitorNumber();
+
+  const audio = document.getElementById("notifSound");
+  if(audio) audio.play().catch(e => console.log("Audio autoplay blocked."));
+
+  // مسح أي تايمر قديم قبل تعيين تايمر جديد
+  clearTimeout(notificationTimer);
+  notificationTimer = setTimeout(() => {
+    hideNotification();
+  }, 8000);
+
+  notification.addEventListener("mouseenter", () => {
+    clearTimeout(notificationTimer);
+  });
+
+  notification.addEventListener("mouseleave", () => {
+    notificationTimer = setTimeout(() => {
+      hideNotification();
+    }, 3000);
+  });
+}
+
+function hideNotification() {
+  const notification = document.getElementById("notification");
+  notification.classList.remove("show");
+  notification.style.display = 'none'; // أخفي العنصر تماما
+  clearTimeout(notificationTimer); // تأكد من إلغاء التايمر
+}
+
+window.addEventListener('load', () => {
+  showNotification();
+  setInterval(() => {
+    const notification = document.getElementById("notification");
+    if(notification.classList.contains("show")) {
       updateVisitorNumber();
-
-      const audio = document.getElementById("notifSound");
-      audio.play().catch(e => console.log("Audio autoplay blocked."));
-
-      notificationTimer = setTimeout(() => {
-        hideNotification();
-      }, 8000);
-
-      notification.addEventListener("mouseenter", () => {
-        clearTimeout(notificationTimer);
-      });
-
-      notification.addEventListener("mouseleave", () => {
-        notificationTimer = setTimeout(() => {
-          hideNotification();
-        }, 3000);
-      });
     }
+  }, 5000);
+});
 
-    function hideNotification() {
-      const notification = document.getElementById("notification");
-      notification.classList.remove("show");
-    }
-
-    window.addEventListener('load', () => {
-      showNotification();
-      setInterval(() => {
-        if(document.getElementById("notification").classList.contains("show")) {
-          updateVisitorNumber();
-        }
-      }, 5000);
-    });
   </script>
 
 
