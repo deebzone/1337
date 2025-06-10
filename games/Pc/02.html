@@ -10242,7 +10242,7 @@
                 <div class="colxl-12">
                     <div class="gt-shop-notices-wrapper">
                         <div class="gt-shop-showing">
-                            <p>(74 Games)</p>
+                            <p id="games-count">(0 Games)</p>
                         </div>
                      
                     </div>
@@ -12402,6 +12402,21 @@
             
         </div>
        </section>
+	   
+	   <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // جبد جميع الكروت
+    const gameCards = document.querySelectorAll('.gt-shop-card-item');
+    
+    // احسب العدد
+    const totalGames = gameCards.length;
+
+    // بدّل العدد فالعنصر
+    const gamesCountEl = document.getElementById('games-count');
+    gamesCountEl.textContent = `(${totalGames} Games)`;
+  });
+</script>
+
 	   
 	   <script>
   document.addEventListener("DOMContentLoaded", function () {

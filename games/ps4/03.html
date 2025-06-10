@@ -3706,7 +3706,7 @@ Touchpad to exit the Dev Menu/Quick Menu</b>
                 <div class="colxl-12">
                     <div class="gt-shop-notices-wrapper">
                         <div class="gt-shop-showing">
-                            <p>(30 Games)</p>
+                            <p id="games-count">(0 Games)</p>
                         </div>
                      
                     </div>
@@ -4586,6 +4586,20 @@ Touchpad to exit the Dev Menu/Quick Menu</b>
             
         </div>
        </section>
+	   
+	      <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // جبد جميع الكروت
+    const gameCards = document.querySelectorAll('.gt-shop-card-item');
+    
+    // احسب العدد
+    const totalGames = gameCards.length;
+
+    // بدّل العدد فالعنصر
+    const gamesCountEl = document.getElementById('games-count');
+    gamesCountEl.textContent = `(${totalGames} Games)`;
+  });
+</script>
 
            <script>
   document.addEventListener("DOMContentLoaded", function () {
