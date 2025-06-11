@@ -158,6 +158,35 @@
   font-size: 22px;
   margin-right: 6px;
 }
+.game-id {
+  cursor: pointer;
+  color: #00f; /* اختياري، باش تبان تقدر تكليكي عليها */
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #323232;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  transform: translateY(20px);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
   </style>
 </head>
 <body>
@@ -223,6 +252,9 @@
 
 	</header>
 	<!-- end header -->
+	
+	<div id="copy-toast" class="toast">Game ID copied!</div>
+
 	
 <div id="notification" class="notification">
     <span class="close-btn" onclick="hideNotification()">&times;</span>
@@ -290,7 +322,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">MindsEye</a></h3>
-							<span>Game ID : 3265250</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3265250</span>
 						</div>
 
 						<div class="card__actions">
@@ -323,7 +355,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Mafia II: Definitive Edition</a></h3>
-							<span>Game ID : 1030830</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1030830</span>
 						</div>
 
 						<div class="card__actions">
@@ -356,7 +388,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Mafia II (Classic)</a></h3>
-							<span>Game ID : 50130</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 50130</span>
 						</div>
 
 						<div class="card__actions">
@@ -389,7 +421,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Elder Scrolls V: Skyrim</a></h3>
-							<span>Game ID : 489830</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 489830</span>
 						</div>
 
 						<div class="card__actions">
@@ -422,7 +454,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DEATH STRANDING</a></h3>
-							<span>Game ID : 1850570</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1850570</span>
 						</div>
 
 						<div class="card__actions">
@@ -455,7 +487,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Rogue</a></h3>
-							<span>Game ID : 311560</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 311560</span>
 						</div>
 
 						<div class="card__actions">
@@ -488,7 +520,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Syndicate</a></h3>
-							<span>Game ID : 368500</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 368500</span>
 						</div>
 
 						<div class="card__actions">
@@ -521,7 +553,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed II</a></h3>
-							<span>Game ID : 33230</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 33230</span>
 						</div>
 
 						<div class="card__actions">
@@ -554,7 +586,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's IV Black Flag</a></h3>
-							<span>Game ID : 242050</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 242050</span>
 						</div>
 
 						<div class="card__actions">
@@ -587,7 +619,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Mirage</a></h3>
-							<span>Game ID : 3035570</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3035570</span>
 						</div>
 
 						<div class="card__actions">
@@ -620,7 +652,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Revelations</a></h3>
-							<span>Game ID : 201870</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 201870</span>
 						</div>
 
 						<div class="card__actions">
@@ -653,7 +685,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Unity</a></h3>
-							<span>Game ID : 289650</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 289650</span>
 						</div>
 
 						<div class="card__actions">
@@ -686,7 +718,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Crew Motorfest</a></h3>
-							<span>Game ID : 2698940</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2698940</span>
 						</div>
 
 						<div class="card__actions">
@@ -719,7 +751,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Sea of Thieves</a></h3>
-							<span>Game ID : 1172620</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1172620</span>
 						</div>
 
 						<div class="card__actions">
@@ -752,7 +784,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Gears of War: Reloaded</a></h3>
-							<span>Game ID : 2523720</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2523720</span>
 						</div>
 
 						<div class="card__actions">
@@ -785,7 +817,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Gears of War: E-Day</a></h3>
-							<span>Game ID : 3010850</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3010850</span>
 						</div>
 
 						<div class="card__actions">
@@ -818,7 +850,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Starfield</a></h3>
-							<span>Game ID : 1716740</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1716740</span>
 						</div>
 
 						<div class="card__actions">
@@ -851,7 +883,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Senua’s Saga: Hellblade II</a></h3>
-							<span>Game ID : 2461850</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2461850</span>
 						</div>
 
 						<div class="card__actions">
@@ -884,7 +916,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DRAGON BALL: Sparking! ZERO</a></h3>
-							<span>Game ID : 1790600</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1790600</span>
 						</div>
 
 						<div class="card__actions">
@@ -917,7 +949,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Marvel's Guardians of the Galaxy</a></h3>
-							<span>Game ID : 1088850</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1088850</span>
 						</div>
 
 						<div class="card__actions">
@@ -950,7 +982,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Kingdom Come: Deliverance II</a></h3>
-							<span>Game ID : 1771300</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1771300</span>
 						</div>
 
 						<div class="card__actions">
@@ -983,7 +1015,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">FINAL FANTASY VII</a></h3>
-							<span>Game ID : 1462040</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1462040</span>
 						</div>
 
 						<div class="card__actions">
@@ -1016,7 +1048,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Dead Space</a></h3>
-							<span>Game ID : 1693980</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1693980</span>
 						</div>
 
 						<div class="card__actions">
@@ -1049,7 +1081,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Outlast</a></h3>
-							<span>Game ID : 238320</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 238320</span>
 						</div>
 
 						<div class="card__actions">
@@ -1082,7 +1114,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Resident Evil Village</a></h3>
-							<span>Game ID : 1196590</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1196590</span>
 						</div>
 
 						<div class="card__actions">
@@ -1115,7 +1147,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Hades</a></h3>
-							<span>Game ID : 1145360</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1145360</span>
 						</div>
 
 						<div class="card__actions">
@@ -1148,7 +1180,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Stellar Blade</a></h3>
-							<span>Game ID : 3489700</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3489700</span>
 						</div>
 
 						<div class="card__actions">
@@ -1181,7 +1213,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Lies of P</a></h3>
-							<span>Game ID : 1627720</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1627720</span>
 						</div>
 
 						<div class="card__actions">
@@ -1214,7 +1246,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">ILL</a></h3>
-							<span>Game ID : 1757350</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1757350</span>
 						</div>
 
 						<div class="card__actions">
@@ -1247,7 +1279,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Black Myth: Wukong</a></h3>
-							<span>Game ID : 2358720</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2358720</span>
 						</div>
 
 						<div class="card__actions">
@@ -1280,7 +1312,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Hell is Us</a></h3>
-							<span>Game ID : 1620730</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1620730</span>
 						</div>
 
 						<div class="card__actions">
@@ -1313,7 +1345,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Directive 8020</a></h3>
-							<span>Game ID : 2255370</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2255370</span>
 						</div>
 
 						<div class="card__actions">
@@ -1346,7 +1378,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Mafia: The Old Country</a></h3>
-							<span>Game ID : 1941540</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1941540</span>
 						</div>
 
 						<div class="card__actions">
@@ -1379,7 +1411,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">PRAGMATA</a></h3>
-							<span>Game ID : 3357650</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3357650</span>
 						</div>
 
 						<div class="card__actions">
@@ -1412,7 +1444,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">SILENT HILL f</a></h3>
-							<span>Game ID : 2947440</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2947440</span>
 						</div>
 
 						<div class="card__actions">
@@ -1445,7 +1477,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">L.A. Noire</a></h3>
-							<span>Game ID : 110800</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 110800</span>
 						</div>
 
 						<div class="card__actions">
@@ -1478,7 +1510,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Firewatch</a></h3>
-							<span>Game ID : 383870</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 383870</span>
 						</div>
 
 						<div class="card__actions">
@@ -1511,7 +1543,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Road 96</a></h3>
-							<span>Game ID : 1466640</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1466640</span>
 						</div>
 
 						<div class="card__actions">
@@ -1544,7 +1576,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">007 First Light</a></h3>
-							<span>Game ID : 3768760</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3768760</span>
 						</div>
 
 						<div class="card__actions">
@@ -1577,7 +1609,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">South of Midnight</a></h3>
-							<span>Game ID : 1934570</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1934570</span>
 						</div>
 
 						<div class="card__actions">
@@ -1610,7 +1642,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">WUCHANG : Fallen Feathers</a></h3>
-							<span>Game ID : 2277560</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2277560</span>
 						</div>
 
 						<div class="card__actions">
@@ -1643,7 +1675,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DOOM: The Dark Ages</a></h3>
-							<span>Game ID : 3017860</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3017860</span>
 						</div>
 
 						<div class="card__actions">
@@ -1676,7 +1708,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Drive Beyond Horizons</a></h3>
-							<span>Game ID : 2625420</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2625420</span>
 						</div>
 
 						<div class="card__actions">
@@ -1709,7 +1741,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Avatar: Frontiers of Pandora</a></h3>
-							<span>Game ID : 2840770</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2840770</span>
 						</div>
 
 						<div class="card__actions">
@@ -1742,7 +1774,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Bodycam</a></h3>
-							<span>Game ID : 2406770</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2406770</span>
 						</div>
 
 						<div class="card__actions">
@@ -1775,7 +1807,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Prince of Persia</a></h3>
-							<span>Game ID : 19980</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 19980</span>
 						</div>
 
 						<div class="card__actions">
@@ -1808,7 +1840,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Sands of Time</a></h3>
-							<span>Game ID : 13600</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 13600</span>
 						</div>
 
 						<div class="card__actions">
@@ -1841,7 +1873,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Warrior Within</a></h3>
-							<span>Game ID : 13500</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 13500</span>
 						</div>
 
 						<div class="card__actions">
@@ -1874,7 +1906,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Two Thrones</a></h3>
-							<span>Game ID : 13530</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 13530</span>
 						</div>
 
 						<div class="card__actions">
@@ -1907,7 +1939,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Forgotten Sands</a></h3>
-							<span>Game ID : 33320</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 33320</span>
 						</div>
 
 						<div class="card__actions">
@@ -1940,7 +1972,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Lost Crown</a></h3>
-							<span>Game ID : 2751000</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2751000</span>
 						</div>
 
 						<div class="card__actions">
@@ -1973,7 +2005,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Insurgency: Sandstorm</a></h3>
-							<span>Game ID : 581320</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 581320</span>
 						</div>
 
 						<div class="card__actions">
@@ -2006,7 +2038,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Metro Exodus</a></h3>
-							<span>Game ID : 412020</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 412020</span>
 						</div>
 
 						<div class="card__actions">
@@ -2039,7 +2071,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DOOM Eternal</a></h3>
-							<span>Game ID : 782330</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 782330</span>
 						</div>
 
 						<div class="card__actions">
@@ -2072,7 +2104,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Grand Theft Auto IV</a></h3>
-							<span>Game ID : 12210</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 12210</span>
 						</div>
 
 						<div class="card__actions">
@@ -2105,7 +2137,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Vice City</a></h3>
-							<span>Game ID : 12110</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 12110</span>
 						</div>
 
 						<div class="card__actions">
@@ -2138,7 +2170,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">San Andreas</a></h3>
-							<span>Game ID : 12120</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 12120</span>
 						</div>
 
 						<div class="card__actions">
@@ -2171,7 +2203,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Black Ops</a></h3>
-							<span>Game ID : 42700</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 42700</span>
 						</div>
 
 						<div class="card__actions">
@@ -2204,7 +2236,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Black Ops Cold War</a></h3>
-							<span>Game ID : 1985810</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1985810</span>
 						</div>
 
 						<div class="card__actions">
@@ -2237,7 +2269,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Black Ops II</a></h3>
-							<span>Game ID : 202970</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 202970</span>
 						</div>
 
 						<div class="card__actions">
@@ -2270,7 +2302,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Modern Warfare</a></h3>
-							<span>Game ID : 2000950</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2000950</span>
 						</div>
 
 						<div class="card__actions">
@@ -2303,7 +2335,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Expedition 33</a></h3>
-							<span>Game ID : 1903340</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1903340</span>
 						</div>
 
 						<div class="card__actions">
@@ -2336,7 +2368,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">ARK: Survival Evolved</a></h3>
-							<span>Game ID : 346110</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 346110</span>
 						</div>
 
 						<div class="card__actions">
@@ -2369,7 +2401,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Modern Warfare 2</a></h3>
-							<span>Game ID : 10180</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 10180</span>
 						</div>
 
 						<div class="card__actions">
@@ -2402,7 +2434,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Stray</a></h3>
-							<span>Game ID : 1332010</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1332010</span>
 						</div>
 
 						<div class="card__actions">
@@ -2435,7 +2467,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Dying Light</a></h3>
-							<span>Game ID : 239140</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 239140</span>
 						</div>
 
 						<div class="card__actions">
@@ -2468,7 +2500,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Cuphead</a></h3>
-							<span>Game ID : 268910</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 268910</span>
 						</div>
 
 						<div class="card__actions">
@@ -2501,7 +2533,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Unravel</a></h3>
-							<span>Game ID : 1225560</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1225560</span>
 						</div>
 
 						<div class="card__actions">
@@ -2534,7 +2566,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Khazan</a></h3>
-							<span>Game ID : 2680010</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2680010</span>
 						</div>
 
 						<div class="card__actions">
@@ -2567,7 +2599,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Atomfall</a></h3>
-							<span>Game ID : 801800</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 801800</span>
 						</div>
 
 						<div class="card__actions">
@@ -2600,7 +2632,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Killing Floor</a></h3>
-							<span>Game ID : 232090</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 232090</span>
 						</div>
 
 						<div class="card__actions">
@@ -2633,7 +2665,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">WWE 2K25</a></h3>
-							<span>Game ID : 2878960</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2878960</span>
 						</div>
 
 						<div class="card__actions">
@@ -2666,7 +2698,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Rise of the Ronin</a></h3>
-							<span>Game ID : 1340990</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1340990</span>
 						</div>
 
 						<div class="card__actions">
@@ -2699,7 +2731,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Ready or Not</a></h3>
-							<span>Game ID : 1144200</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1144200</span>
 						</div>
 
 						<div class="card__actions">
@@ -2732,7 +2764,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Marvel's Spider-Man 2</a></h3>
-							<span>Game ID : 2651280</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2651280</span>
 						</div>
 
 						<div class="card__actions">
@@ -2765,7 +2797,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">R.E.P.O</a></h3>
-							<span>Game ID : 3241660</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 3241660</span>
 						</div>
 
 						<div class="card__actions">
@@ -2798,7 +2830,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Grand Theft Auto V</a></h3>
-							<span>Game ID : 271590</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 271590</span>
 						</div>
 
 						<div class="card__actions">
@@ -2831,7 +2863,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Resident Evil 4</a></h3>
-							<span>Game ID : 2050650</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2050650</span>
 						</div>
 
 						<div class="card__actions">
@@ -2864,7 +2896,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Witcher 3: Wild Hunt</a></h3>
-							<span>Game ID : 292030</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 292030</span>
 						</div>
 
 						<div class="card__actions">
@@ -2897,7 +2929,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Batman™: Arkham Knight</a></h3>
-							<span>Game ID : 208650</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 208650</span>
 						</div>
 
 						<div class="card__actions">
@@ -2930,7 +2962,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Watch Dogs: Legion</a></h3>
-							<span>Game ID : 2239550</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 2239550</span>
 						</div>
 
 						<div class="card__actions">
@@ -2963,7 +2995,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Watch_Dogs 2</a></h3>
-							<span>Game ID : 447040</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 447040</span>
 						</div>
 
 						<div class="card__actions">
@@ -2996,7 +3028,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Sleeping Dogs</a></h3>
-							<span>Game ID : 307690</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 307690</span>
 						</div>
 
 						<div class="card__actions">
@@ -3029,7 +3061,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Marvel’s Spider-Man</a></h3>
-							<span>Game ID : 1817070</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1817070</span>
 						</div>
 
 						<div class="card__actions">
@@ -3062,7 +3094,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Marvel’s Spider-Man</a></h3>
-							<span>Game ID : 1817190</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1817190</span>
 						</div>
 
 						<div class="card__actions">
@@ -3095,7 +3127,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Cyberpunk 2077</a></h3>
-							<span>Game ID : 1091500</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID : 1091500</span>
 						</div>
 
 						<div class="card__actions">
@@ -3128,7 +3160,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Mafia: Definitive Edition</a></h3>
-							<span>Game ID :	1030840</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1030840</span>
 						</div>
 
 						<div class="card__actions">
@@ -3161,7 +3193,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Mafia III: Definitive Edition</a></h3>
-							<span>Game ID :	360430</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	360430</span>
 						</div>
 
 						<div class="card__actions">
@@ -3194,7 +3226,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Red Dead Redemption 2</a></h3>
-							<span>Game ID :	1174180</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1174180</span>
 						</div>
 
 						<div class="card__actions">
@@ -3227,7 +3259,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Red Dead Redemption</a></h3>
-							<span>Game ID :	2668510</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2668510</span>
 						</div>
 
 						<div class="card__actions">
@@ -3260,7 +3292,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">HITMAN™ 2</a></h3>
-							<span>Game ID :	863550</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	863550</span>
 						</div>
 
 						<div class="card__actions">
@@ -3293,7 +3325,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Ghost of Tsushima</a></h3>
-							<span>Game ID :	2215430</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2215430</span>
 						</div>
 
 						<div class="card__actions">
@@ -3326,7 +3358,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Odyssey</a></h3>
-							<span>Game ID :	812140</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	812140</span>
 						</div>
 
 						<div class="card__actions">
@@ -3359,7 +3391,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Valhalla</a></h3>
-							<span>Game ID :	2208920</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2208920</span>
 						</div>
 
 						<div class="card__actions">
@@ -3392,7 +3424,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Assassin's Creed Origins</a></h3>
-							<span>Game ID :	582160</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	582160</span>
 						</div>
 
 						<div class="card__actions">
@@ -3425,7 +3457,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Rise of the Tomb Raider</a></h3>
-							<span>Game ID :	391220</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	391220</span>
 						</div>
 
 						<div class="card__actions">
@@ -3458,7 +3490,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Shadow of the Tomb Raider</a></h3>
-							<span>Game ID :	750920</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	750920</span>
 						</div>
 
 						<div class="card__actions">
@@ -3491,7 +3523,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">METAL GEAR SOLID V</a></h3>
-							<span>Game ID :	287700</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	287700</span>
 						</div>
 
 						<div class="card__actions">
@@ -3524,7 +3556,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Middle-earth™: Shadow of War™</a></h3>
-							<span>Game ID :	356190</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	356190</span>
 						</div>
 
 						<div class="card__actions">
@@ -3557,7 +3589,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">SILENT HILL 2</a></h3>
-							<span>Game ID :	2124490</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2124490</span>
 						</div>
 
 						<div class="card__actions">
@@ -3590,7 +3622,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">ELDEN RING</a></h3>
-							<span>Game ID :	1245620</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1245620</span>
 						</div>
 
 						<div class="card__actions">
@@ -3623,7 +3655,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DARK SOULS™</a></h3>
-							<span>Game ID :	570940</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	570940</span>
 						</div>
 
 						<div class="card__actions">
@@ -3656,7 +3688,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DARK SOULS™ III</a></h3>
-							<span>Game ID :	374320</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	374320</span>
 						</div>
 
 						<div class="card__actions">
@@ -3689,7 +3721,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">God of War Ragnarök</a></h3>
-							<span>Game ID :	2322010</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2322010</span>
 						</div>
 
 						<div class="card__actions">
@@ -3722,7 +3754,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Sekiro™: Shadows Die Twice</a></h3>
-							<span>Game ID :	814380</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	814380</span>
 						</div>
 
 						<div class="card__actions">
@@ -3755,7 +3787,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Monster Hunter: World</a></h3>
-							<span>Game ID :	582010</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	582010</span>
 						</div>
 
 						<div class="card__actions">
@@ -3788,7 +3820,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Horizon Forbidden West</a></h3>
-							<span>Game ID :	2420110</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2420110</span>
 						</div>
 
 						<div class="card__actions">
@@ -3821,7 +3853,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Detroit: Become Human</a></h3>
-							<span>Game ID :	1222140</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222140</span>
 						</div>
 
 						<div class="card__actions">
@@ -3854,7 +3886,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Little Nightmares</a></h3>
-							<span>Game ID :	424840</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	424840</span>
 						</div>
 
 						<div class="card__actions">
@@ -3887,7 +3919,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Little Nightmares II</a></h3>
-							<span>Game ID :	860510</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	860510</span>
 						</div>
 
 						<div class="card__actions">
@@ -3920,7 +3952,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Until Dawn™</a></h3>
-							<span>Game ID :	2172010</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2172010</span>
 						</div>
 
 						<div class="card__actions">
@@ -3953,7 +3985,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Walking Dead</a></h3>
-							<span>Game ID :	207610</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	207610</span>
 						</div>
 
 						<div class="card__actions">
@@ -3986,7 +4018,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Walking Dead II</a></h3>
-							<span>Game ID :	261030</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	261030</span>
 						</div>
 
 						<div class="card__actions">
@@ -4019,7 +4051,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Life is Strange™</a></h3>
-							<span>Game ID :	319630</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	319630</span>
 						</div>
 
 						<div class="card__actions">
@@ -4052,7 +4084,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Life is Strange 2</a></h3>
-							<span>Game ID :	532210</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	532210</span>
 						</div>
 
 						<div class="card__actions">
@@ -4085,7 +4117,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Heavy Rain</a></h3>
-							<span>Game ID :	960910</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	960910</span>
 						</div>
 
 						<div class="card__actions">
@@ -4118,7 +4150,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Beyond: Two Souls</a></h3>
-							<span>Game ID :	960990</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	960990</span>
 						</div>
 
 						<div class="card__actions">
@@ -4151,7 +4183,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Last of Us™ Part II</a></h3>
-							<span>Game ID :	2531310</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2531310</span>
 						</div>
 
 						<div class="card__actions">
@@ -4184,7 +4216,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Last of Us™ Part I</a></h3>
-							<span>Game ID :	1888930</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1888930</span>
 						</div>
 
 						<div class="card__actions">
@@ -4217,7 +4249,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">A Plague Tale: Innocence</a></h3>
-							<span>Game ID :	752590</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	752590</span>
 						</div>
 
 						<div class="card__actions">
@@ -4250,7 +4282,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">A Plague Tale: Requiem</a></h3>
-							<span>Game ID :	1182900</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1182900</span>
 						</div>
 
 						<div class="card__actions">
@@ -4283,7 +4315,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Days Gone</a></h3>
-							<span>Game ID :	1259420</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1259420</span>
 						</div>
 
 						<div class="card__actions">
@@ -4316,7 +4348,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">The Crew 2</a></h3>
-							<span>Game ID :	646910</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	646910</span>
 						</div>
 
 						<div class="card__actions">
@@ -4349,7 +4381,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Forza Horizon 4</a></h3>
-							<span>Game ID :	1293830</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1293830</span>
 						</div>
 
 						<div class="card__actions">
@@ -4382,7 +4414,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Forza Horizon 5</a></h3>
-							<span>Game ID :	1551360</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1551360</span>
 						</div>
 
 						<div class="card__actions">
@@ -4415,7 +4447,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">DIRT 5</a></h3>
-							<span>Game ID :	1038250</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1038250</span>
 						</div>
 
 						<div class="card__actions">
@@ -4448,7 +4480,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Need for Speed™ Heat</a></h3>
-							<span>Game ID :	1222680</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222680</span>
 						</div>
 
 						<div class="card__actions">
@@ -4481,7 +4513,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Call of Duty: Black Ops III</a></h3>
-							<span>Game ID :	311210</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	311210</span>
 						</div>
 
 						<div class="card__actions">
@@ -4514,7 +4546,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">It Takes Two</a></h3>
-							<span>Game ID :	1426210</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1426210</span>
 						</div>
 
 						<div class="card__actions">
@@ -4547,7 +4579,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Split Fiction</a></h3>
-							<span>Game ID :	2001120</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2001120</span>
 						</div>
 
 						<div class="card__actions">
@@ -4580,7 +4612,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">A Way Out</a></h3>
-							<span>Game ID :	1222700</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222700</span>
 						</div>
 
 						<div class="card__actions">
@@ -4613,7 +4645,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Far Cry® 3</a></h3>
-							<span>Game ID :	220240</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	220240</span>
 						</div>
 
 						<div class="card__actions">
@@ -4646,7 +4678,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Far Cry® 4</a></h3>
-							<span>Game ID :	298110</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	298110</span>
 						</div>
 
 						<div class="card__actions">
@@ -4679,7 +4711,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">Far Cry® 5</a></h3>
-							<span>Game ID :	552520</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	552520</span>
 						</div>
 
 						<div class="card__actions">
@@ -4712,7 +4744,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">EA SPORTS FC™ 24</a></h3>
-							<span>Game ID :	2195250</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2195250</span>
 						</div>
 
 						<div class="card__actions">
@@ -4745,7 +4777,7 @@
 
 						<div class="card__title">
 							<h3><a href="#">EA SPORTS FC™ 25</a></h3>
-							<span>Game ID :	2669320</span>
+							<span class="game-id" onclick="copyGameID(this)">Game ID :	2669320</span>
 						</div>
 
 						<div class="card__actions">
@@ -4944,6 +4976,25 @@
 	<!-- end section -->
 	
 	<script>
+  function copyGameID(element) {
+    // كناخدو الرقم من النص
+    const text = element.innerText;
+    const match = text.match(/\d+/); // كيجبد غير الرقم
+
+    if (match) {
+      const gameId = match[0];
+
+      // ننسخو فـ الكليپبورد
+      navigator.clipboard.writeText(gameId).then(() => {
+        alert("Game ID copied: " + gameId);
+      }).catch(err => {
+        console.error('Failed to copy Game ID: ', err);
+      });
+    }
+  }
+</script>
+
+	<script>
   // منين تسالي تحميل الصفحة
   document.addEventListener('DOMContentLoaded', function () {
     // جبد جميع الكروت
@@ -4957,6 +5008,33 @@
     gamesCountEl.textContent = `(${totalGames} Games)`;
   });
 </script>
+
+<script>
+  function copyGameID(element) {
+    const text = element.innerText;
+    const match = text.match(/\d+/);
+
+    if (match) {
+      const gameId = match[0];
+      navigator.clipboard.writeText(gameId).then(() => {
+        showToast("Game ID copied: " + gameId);
+      }).catch(err => {
+        console.error('Failed to copy Game ID: ', err);
+      });
+    }
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('copy-toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000); // تختفي بعد 3 ثواني
+  }
+</script>
+
 
 
 	 <script>
