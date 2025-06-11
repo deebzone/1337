@@ -186,6 +186,104 @@
   pointer-events: auto;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  animation: popIn 0.3s ease;
+}
+
+.modal h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #c0392b;
+}
+
+.modal p {
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-buttons button,
+.modal-buttons a {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.modal-buttons button {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.modal-buttons a {
+  background-color: #e74c3c;
+  color: white;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.scrolling-text-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  height: 24px;
+}
+
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* فقط إذا كانت طويلة بزاف، نضيف animation عبر JS */
+.animate-scroll {
+  padding-left: 100%;
+  animation: scroll-text 10s linear infinite;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
   </style>
 </head>
@@ -252,6 +350,23 @@
 
 	</header>
 	<!-- end header -->
+	
+<div id="warning-modal" class="modal-overlay">
+  <div class="modal">
+    <h3>Warning Before Download</h3>
+    <p><strong>Game:</strong> <span id="modal-game-name"></span></p>
+    <p><strong>Game ID:</strong> <span id="modal-game-id"></span></p>
+    <p style="margin-top: 10px;">
+      Downloading pirated games is illegal and not recommended. Please consider supporting the developers by purchasing the original game.
+    </p>
+    <div class="modal-buttons">
+      <button onclick="closeModal()">Cancel</button>
+      <a id="download-confirm" href="#" download>Download Anyway</a>
+    </div>
+  </div>
+</div>
+
+
 	
 	<div id="copy-toast" class="toast">Game ID copied!</div>
 
@@ -321,7 +436,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">MindsEye</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">MindsEye</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3265250</span>
 						</div>
 
@@ -354,12 +469,14 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Mafia II: Definitive Edition</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia II: Definitive Edition</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1030830</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1030830.zip" class="card__buy" type="button">File Game</a>
+
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1030830.zip', 'Mafia II: Definitive Edition', '1030830')" class="card__buy"> File Game </button>
+
 
 							<a href="https://steamdb.info/app/1030830/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -387,12 +504,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Mafia II (Classic)</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia II (Classic)</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 50130</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/50130.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/50130.zip', 'Mafia II (Classic)', '50130')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/50130/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -420,12 +537,13 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Elder Scrolls V: Skyrim</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Elder Scrolls V: Skyrim</a></div></h3>
+
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 489830</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/489830.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/489830.zip', 'The Elder Scrolls V: Skyrim', '489830')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/489830/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -453,12 +571,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DEATH STRANDING</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DEATH STRANDING</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1850570</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1850570.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1850570.zip', 'DEATH STRANDING', '1850570')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1850570/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -486,12 +604,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Rogue</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Rogue</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 311560</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/311560.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/311560.zip', 'Assassins Creed Rogue', '311560')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/311560/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -519,12 +637,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Syndicate</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Syndicate</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 368500</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/368500.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/368500.zip', 'Assassins Creed Syndicate', '368500')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/368500/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -552,12 +670,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 33230</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/33230.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/33230.zip', 'Assassins Creed II', '33230')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/33230/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -585,12 +703,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's IV Black Flag</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's IV Black Flag</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 242050</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/242050.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/242050.zip', 'Assassins IV Black Flag', '242050')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/242050/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -618,12 +736,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Mirage</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Mirage</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3035570</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/3035570.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/3035570.zip', 'Assassins Creed Mirage', '3035570')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/3035570/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -651,12 +769,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Revelations</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Revelations</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 201870</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/201870.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/201870.zip', 'Assassins Creed Revelations', '201870')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/201870/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -684,12 +802,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Unity</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Unity</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 289650</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/289650.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/289650.zip', 'Assassins Creed Unity', '289650')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/289650/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -717,12 +835,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Crew Motorfest</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Crew Motorfest</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2698940</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2698940.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2698940.zip', 'The Crew Motorfest', '2698940')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2698940/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -750,12 +868,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Sea of Thieves</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Sea of Thieves</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1172620</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1172620.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1172620.zip', 'Sea of Thieves', '1172620')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1172620/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -783,7 +901,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Gears of War: Reloaded</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Gears of War: Reloaded</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2523720</span>
 						</div>
 
@@ -816,7 +934,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Gears of War: E-Day</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Gears of War: E-Day</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3010850</span>
 						</div>
 
@@ -849,12 +967,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Starfield</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Starfield</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1716740</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1716740.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1716740.zip', 'Starfield', '1716740')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1716740/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -882,12 +1000,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Senua’s Saga: Hellblade II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Senua’s Saga: Hellblade II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2461850</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2461850.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2461850.zip', 'Senuas Saga: Hellblade II', '2461850')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2461850/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -915,12 +1033,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DRAGON BALL: Sparking! ZERO</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DRAGON BALL: Sparking! ZERO</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1790600</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1790600.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1790600.zip', 'DRAGON BALL: Sparking! ZERO', '1790600')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1790600/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -948,12 +1066,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Marvel's Guardians of the Galaxy</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Marvel's Guardians of the Galaxy</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1088850</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1088850.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1088850.zip', 'Marvel s Guardians of the Galaxy', '1088850')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1088850/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -981,12 +1099,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Kingdom Come: Deliverance II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Kingdom Come: Deliverance II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1771300</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1771300.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1771300.zip', 'Kingdom Come: Deliverance II', '1771300')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1771300/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1014,12 +1132,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">FINAL FANTASY VII</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">FINAL FANTASY VII</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1462040</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1462040.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1462040.zip', 'FINAL FANTASY VII', '1462040')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1462040/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1047,12 +1165,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Dead Space</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Dead Space</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1693980</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1693980.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1693980.zip', 'Dead Space', '1693980')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1693980/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1080,12 +1198,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Outlast</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Outlast</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 238320</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/238320.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/238320.zip', 'Outlast', '238320')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/238320/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1113,12 +1231,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Resident Evil Village</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Resident Evil Village</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1196590</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1196590.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1196590.zip', 'Resident Evil Village', '1196590')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1196590/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1146,12 +1264,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Hades</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Hades</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1145360</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1145360.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1145360.zip', 'Hades', '1145360')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1145360/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1179,7 +1297,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Stellar Blade</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Stellar Blade</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3489700</span>
 						</div>
 
@@ -1212,12 +1330,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Lies of P</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Lies of P</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1627720</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1627720.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1627720.zip', 'Lies of P', '1627720')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1627720/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1245,7 +1363,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">ILL</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">ILL</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1757350</span>
 						</div>
 
@@ -1278,12 +1396,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Black Myth: Wukong</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Black Myth: Wukong</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2358720</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2358720.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2358720.zip', 'Black Myth: Wukong', '2358720')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2358720/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1311,7 +1429,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Hell is Us</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Hell is Us</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1620730</span>
 						</div>
 
@@ -1344,7 +1462,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Directive 8020</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Directive 8020</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2255370</span>
 						</div>
 
@@ -1377,7 +1495,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Mafia: The Old Country</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia: The Old Country</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1941540</span>
 						</div>
 
@@ -1410,7 +1528,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">PRAGMATA</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">PRAGMATA</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3357650</span>
 						</div>
 
@@ -1443,7 +1561,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">SILENT HILL f</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">SILENT HILL f</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2947440</span>
 						</div>
 
@@ -1476,12 +1594,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">L.A. Noire</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">L.A. Noire</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 110800</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/110800.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/110800.zip', 'L.A. Noire', '110800')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/110800/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1509,12 +1627,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Firewatch</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Firewatch</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 383870</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/383870.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/83870.zip', 'Firewatch', '383870')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/383870/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1542,12 +1660,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Road 96</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Road 96</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1466640</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1466640.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1466640.zip', 'Road 96', '1466640')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1466640/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1575,7 +1693,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">007 First Light</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">007 First Light</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3768760</span>
 						</div>
 
@@ -1608,12 +1726,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">South of Midnight</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">South of Midnight</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1934570</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1934570.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1934570.zip', 'South of Midnight', '1934570')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1934570/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1641,7 +1759,7 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">WUCHANG : Fallen Feathers</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">WUCHANG : Fallen Feathers</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2277560</span>
 						</div>
 
@@ -1674,12 +1792,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DOOM: The Dark Ages</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DOOM: The Dark Ages</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3017860</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/3017860.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/3017860.zip', 'DOOM: The Dark Ages', '3017860')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/3017860/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1707,12 +1825,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Drive Beyond Horizons</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Drive Beyond Horizons</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2625420</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2625420.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2625420.zip', 'Drive Beyond Horizons', '2625420')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2625420/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1740,12 +1858,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Avatar: Frontiers of Pandora</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Avatar: Frontiers of Pandora</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2840770</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2840770.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2840770.zip', 'Avatar: Frontiers of Pandora', '2840770')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2840770/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1773,12 +1891,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Bodycam</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Bodycam</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2406770</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2406770.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2406770.zip', 'Bodycam', '2406770')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2406770/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1806,12 +1924,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Prince of Persia</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Prince of Persia</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 19980</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/19980.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/19980.zip', 'Prince of Persia', '19980')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/19980/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1839,12 +1957,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Sands of Time</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Sands of Time</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 13600</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/13600.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/13600.zip', 'The Sands of Time', '13600')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/13600/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1872,12 +1990,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Warrior Within</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Warrior Within</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 13500</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/13500.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/13500.zip', 'Warrior Within', '13500')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/13500/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1905,12 +2023,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Two Thrones</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Two Thrones</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 13530</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/13530.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/13530.zip', 'The Two Thrones', '13530')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/13530/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1938,12 +2056,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Forgotten Sands</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Forgotten Sands</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 33320</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/33320.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/33320.zip', 'The Forgotten Sands', '33320')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/33320/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -1971,12 +2089,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Lost Crown</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Lost Crown</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2751000</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2751000.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2751000.zip', 'The Lost Crown', '2751000')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2751000/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2004,12 +2122,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Insurgency: Sandstorm</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Insurgency: Sandstorm</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 581320</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/581320.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/581320.zip', 'Insurgency: Sandstorm', '581320')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/581320/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2037,12 +2155,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Metro Exodus</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Metro Exodus</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 412020</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/412020.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/412020.zip', 'Metro Exodus', '412020')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/412020/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2070,12 +2188,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DOOM Eternal</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DOOM Eternal</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 782330</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/782330.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/782330.zip', 'DOOM Eternal', '782330')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/782330/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2103,12 +2221,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Grand Theft Auto IV</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Grand Theft Auto IV</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 12210</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/12210.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/12210.zip', 'Grand Theft Auto IV', '12210')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/12210/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2136,12 +2254,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Vice City</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Vice City</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 12110</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/12110.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/12110.zip', 'Vice City', '12110')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/12110/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2169,12 +2287,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">San Andreas</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">San Andreas</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 12120</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/12120.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/12120.zip', 'San Andreas', '12120')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/12120/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2202,12 +2320,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Black Ops</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Black Ops</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 42700</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/42700.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/42700.zip', 'Black Ops', '42700')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/42700/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2235,12 +2353,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Black Ops Cold War</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Black Ops Cold War</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1985810</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1985810.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1985810.zip', 'Black Ops Cold War', '1985810')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1985810/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2268,12 +2386,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Black Ops II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Black Ops II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 202970</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/202970.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/202970.zip', 'Black Ops II', '202970')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/202970/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2301,12 +2419,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Modern Warfare</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Modern Warfare</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2000950</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2000950.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2000950.zip', 'Modern Warfare', '2000950')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2000950/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2334,12 +2452,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Expedition 33</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Expedition 33</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1903340</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1903340.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1903340.zip', 'Expedition 33', '1903340')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1903340/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2367,12 +2485,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">ARK: Survival Evolved</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">ARK: Survival Evolved</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 346110</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/346110.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/346110.zip', 'ARK: Survival Evolved', '346110')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/346110/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2400,12 +2518,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Modern Warfare 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Modern Warfare 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 10180</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/10180.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/10180.zip', 'Modern Warfare 2', '10180')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/10180/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2433,12 +2551,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Stray</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Stray</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1332010</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1332010.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1332010.zip', 'Stray', '1332010')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1332010/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2466,12 +2584,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Dying Light</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Dying Light</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 239140</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/239140.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/239140.zip', 'Dying Light', '239140')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/239140/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2499,12 +2617,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Cuphead</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Cuphead</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 268910</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/268910.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/268910.zip', 'Cuphead', '268910')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/268910/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2532,12 +2650,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Unravel</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Unravel</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1225560</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1225560.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1225560.zip', 'Unravel', '1225560')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1225560/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2565,12 +2683,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Khazan</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Khazan</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2680010</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2680010.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2680010.zip', 'Khazan', '2680010')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2680010/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2598,12 +2716,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Atomfall</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Atomfall</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 801800</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/801800.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/801800.zip', 'Atomfall', '801800')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/801800/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2631,12 +2749,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Killing Floor</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Killing Floor</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 232090</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/232090.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/232090.zip', 'Killing Floor', '232090')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/232090/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2664,12 +2782,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">WWE 2K25</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">WWE 2K25</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2878960</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2878960.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2878960.zip', 'WWE 2K25', '2878960')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2878960/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2697,12 +2815,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Rise of the Ronin</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Rise of the Ronin</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1340990</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1340990.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1340990.zip', 'Rise of the Ronin', '1340990')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1340990/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2730,12 +2848,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Ready or Not</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Ready or Not</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1144200</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1144200.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1144200.zip', 'Ready or Not', '1144200')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1144200/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2763,12 +2881,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Marvel's Spider-Man 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Marvel's Spider-Man 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2651280</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2651280.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2651280.zip', 'Spider-Man 2', '2651280')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2651280/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2796,12 +2914,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">R.E.P.O</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">R.E.P.O</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 3241660</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/3241660.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/3241660.zip', 'R.E.P.O', '3241660')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/3241660/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2829,12 +2947,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Grand Theft Auto V</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Grand Theft Auto V</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 271590</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/271590.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/271590.zip', 'Grand Theft Auto V', '271590')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/271590/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2862,12 +2980,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Resident Evil 4</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Resident Evil 4</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2050650</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2050650.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2050650.zip', 'Resident Evil 4', '2050650')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2050650/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2895,12 +3013,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Witcher 3: Wild Hunt</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Witcher 3: Wild Hunt</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 292030</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/292030.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/292030.zip', 'The Witcher 3: Wild Hunt', '292030')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/292030/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2928,12 +3046,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Batman™: Arkham Knight</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Batman™: Arkham Knight</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 208650</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/208650.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/208650.zip', 'Batman™: Arkham Knight', '208650')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/208650/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2961,12 +3079,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Watch Dogs: Legion</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Watch Dogs: Legion</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 2239550</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2239550.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2239550.zip', 'Watch Dogs: Legion', '2239550')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2239550/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -2994,12 +3112,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Watch_Dogs 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Watch Dogs 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 447040</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/447040.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/447040.zip', 'Watch Dogs 2', '447040')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/447040/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3027,12 +3145,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Sleeping Dogs</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Sleeping Dogs</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 307690</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/307690.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/307690.zip', 'Sleeping Dogs', '307690')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/307690/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3060,12 +3178,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Marvel’s Spider-Man</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Marvel’s Spider Man</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1817070</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1817070.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1817070.zip', 'Spider Man', '1817070')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1817070/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3093,12 +3211,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Marvel’s Spider-Man</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Marvel’s Spider-Man</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1817190</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1817190.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1817190.zip', 'Milse Morales', '1817190')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1817190/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3126,12 +3244,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Cyberpunk 2077</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Cyberpunk 2077</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID : 1091500</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1091500.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1091500.zip', 'Cyberpunk 2077', '1091500')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1091500/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3159,12 +3277,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Mafia: Definitive Edition</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia: Definitive Edition</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1030840</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1030840.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1030840.zip', 'Mafia: Definitive Edition', '1030840')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1030840/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3192,12 +3310,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Mafia III: Definitive Edition</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia III: Definitive Edition</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	360430</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/360430.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/360430.zip', 'Mafia III: Definitive Edition', '360430')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/360430/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3225,12 +3343,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Red Dead Redemption 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Red Dead Redemption 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1174180</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1174180.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1174180.zip', 'Red Dead Redemption 2', '1174180')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1174180/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3258,12 +3376,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Red Dead Redemption</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Red Dead Redemption</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2668510</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2668510.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2668510.zip', 'Red Dead Redemption', '2668510')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2668510/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3291,12 +3409,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">HITMAN™ 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">HITMAN™ 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	863550</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/863550.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/863550.zip', 'HITMAN™ 2', '863550')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/863550/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3324,12 +3442,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Ghost of Tsushima</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Ghost of Tsushima</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2215430</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2215430.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2215430.zip', 'Ghost of Tsushima', '2215430')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2215430/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3357,12 +3475,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Odyssey</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Odyssey</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	812140</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/812140.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/812140.zip', 'Assassin s Odyssey', '812140')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/812140/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3390,12 +3508,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Valhalla</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Valhalla</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2208920</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2208920.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2208920.zip', 'Assassin s Creed Valhalla', '2208920')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2208920/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3423,12 +3541,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Assassin's Creed Origins</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Origins</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	582160</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/582160.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/582160.zip', 'Assassin s Creed Origins', '582160')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/582160/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3456,12 +3574,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Rise of the Tomb Raider</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Rise of the Tomb Raider</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	391220</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/391220.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/391220.zip', 'Rise of the Tomb Raider', '391220')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/391220/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3489,12 +3607,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Shadow of the Tomb Raider</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Shadow of the Tomb Raider</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	750920</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/750920.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/750920.zip', 'Shadow of the Tomb Raider', '750920')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/750920/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3522,12 +3640,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">METAL GEAR SOLID V</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">METAL GEAR SOLID V</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	287700</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/287700.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/287700.zip', 'METAL GEAR SOLID V', '287700')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/287700/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3555,12 +3673,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Middle-earth™: Shadow of War™</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Middle earth™: Shadow of War™</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	356190</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/356190.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/356190.zip', 'Middle earth™: Shadow of War™', '356190')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/356190/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3588,12 +3706,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">SILENT HILL 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">SILENT HILL 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2124490</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2124490.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2124490.zip', 'SILENT HILL 2', '2124490')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2124490/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3621,12 +3739,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">ELDEN RING</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">ELDEN RING</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1245620</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1245620.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1245620.zip', 'ELDEN RING', '1245620')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1245620/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3654,12 +3772,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DARK SOULS™</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DARK SOULS™</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	570940</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/570940.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/570940.zip', 'DARK SOULS™', '570940')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/570940/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3687,12 +3805,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DARK SOULS™ III</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DARK SOULS™ III</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	374320</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/374320.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/374320.zip', 'DARK SOULS™ III', '374320')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/374320/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3720,12 +3838,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">God of War Ragnarök</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Ragnarök</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2322010</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2322010.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2322010.zip', 'Ragnarök', '2322010')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2322010/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3753,12 +3871,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Sekiro™: Shadows Die Twice</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Sekiro™: Shadows Die Twice</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	814380</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/814380.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/814380.zip', 'Sekiro™: Shadows Die Twice', '814380')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/814380/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3786,12 +3904,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Monster Hunter: World</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Monster Hunter: World</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	582010</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/582010.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/582010.zip', 'Monster Hunter: World', '582010')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/582010/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3819,12 +3937,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Horizon Forbidden West</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Horizon Forbidden West</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2420110</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2420110.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2420110.zip', 'Horizon Forbidden West', '2420110')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2420110/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3852,12 +3970,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Detroit: Become Human</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Detroit: Become Human</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222140</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1222140.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1222140.zip', 'Detroit: Become Human', '1222140')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1222140/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3885,12 +4003,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Little Nightmares</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Little Nightmares</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	424840</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/424840.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/424840.zip', 'Little Nightmares', '424840')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/424840/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3918,12 +4036,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Little Nightmares II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Little Nightmares II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	860510</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/860510.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/860510.zip', 'Little Nightmares II', '860510')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/860510/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3951,12 +4069,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Until Dawn™</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Until Dawn™</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2172010</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2172010.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2172010.zip', 'Until Dawn™', '2172010')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2172010/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -3984,12 +4102,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Walking Dead</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Walking Dead</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	207610</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/207610.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/207610.zip', 'The Walking Dead', '207610')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/207610/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4017,12 +4135,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Walking Dead II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Walking Dead II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	261030</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/261030.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/261030.zip', 'The Walking Dead II', '261030')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/261030/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4050,12 +4168,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Life is Strange™</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Life is Strange™</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	319630</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/319630.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/319630.zip', 'Life is Strange™', '319630')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/319630/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4083,12 +4201,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Life is Strange 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Life is Strange 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	532210</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/532210.zip" class="card__buy" type="button">File Game</a>
+							<a href="#" onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/532210.zip', 'Life is Strange 2', '532210')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/532210/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4116,12 +4234,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Heavy Rain</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Heavy Rain</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	960910</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/960910.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/960910.zip', 'Heavy Rain', '960910')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/960910/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4149,12 +4267,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Beyond: Two Souls</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Beyond: Two Souls</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	960990</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/960990.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/960990.zip', 'Beyond: Two Souls', '960990')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/960990/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4182,12 +4300,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Last of Us™ Part II</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Last of Us™ Part II</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2531310</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2531310.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2531310.zip', 'The Last of Us™ Part II', '2531310')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2531310/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4215,12 +4333,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Last of Us™ Part I</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Last of Us™ Part I</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1888930</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1888930.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1888930.zip', 'The Last of Us™ Part I', '1888930')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1888930/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4248,12 +4366,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">A Plague Tale: Innocence</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">A Plague Tale: Innocence</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	752590</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/752590.zip" class="card__buy" type="button">File Game</a>
+						<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/752590.zip', 'A Plague Tale: Innocence', '752590')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/752590/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4281,12 +4399,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">A Plague Tale: Requiem</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">A Plague Tale: Requiem</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1182900</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1182900.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1182900.zip', 'A Plague Tale: Requiem', '1182900')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1182900/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4314,12 +4432,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Days Gone</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Days Gone</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1259420</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1259420.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1259420.zip', 'Days Gone', '1259420')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1259420/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4347,12 +4465,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">The Crew 2</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">The Crew 2</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	646910</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/646910.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/646910.zip', 'The Crew 2', '646910')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/646910/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4380,12 +4498,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Forza Horizon 4</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Forza Horizon 4</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1293830</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1293830.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1293830.zip', 'Forza Horizon 4', '1293830')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1293830/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4413,12 +4531,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Forza Horizon 5</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Forza Horizon 5</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1551360</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1551360.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1551360.zip', 'Forza Horizon 5', '1551360')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1551360/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4446,12 +4564,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">DIRT 5</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">DIRT 5</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1038250</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1038250.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1038250.zip', 'DIRT 5', '1038250')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1038250/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4479,12 +4597,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Need for Speed™ Heat</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Need for Speed™ Heat</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222680</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1222680.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1222680.zip', 'Need for Speed™ Heat', '1222680')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1222680/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4512,12 +4630,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Call of Duty: Black Ops III</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Call of Duty: Black Ops III</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	311210</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/311210.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/311210.zip', 'Call of Duty: Black Ops III', '311210')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/311210/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4545,12 +4663,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">It Takes Two</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">It Takes Two</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1426210</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1426210.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1426210.zip', 'It Takes Two', '1426210')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1426210/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4578,12 +4696,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Split Fiction</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Split Fiction</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2001120</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2001120.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2001120.zip', 'Split Fiction', '2001120')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2001120/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4611,12 +4729,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">A Way Out</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">A Way Out</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	1222700</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/1222700.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/1222700.zip', 'A Way Out', '1222700')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/1222700/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4644,12 +4762,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Far Cry® 3</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Far Cry® 3</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	220240</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/220240.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/220240.zip', 'Far Cry® 3', '220240')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/220240/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4677,12 +4795,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Far Cry® 4</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Far Cry® 4</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	298110</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/298110.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/298110.zip', 'Far Cry® 4', '298110')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/298110/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4710,12 +4828,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">Far Cry® 5</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Far Cry® 5</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	552520</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/552520.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/552520.zip', 'Far Cry® 5', '552520')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/552520/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4743,12 +4861,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">EA SPORTS FC™ 24</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">EA SPORTS FC™ 24</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2195250</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2195250.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2195250.zip', 'EA SPORTS FC™ 24', '2195250')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2195250/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4776,12 +4894,12 @@
 						</ul>
 
 						<div class="card__title">
-							<h3><a href="#">EA SPORTS FC™ 25</a></h3>
+							<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">EA SPORTS FC™ 25</a></div></h3>
 							<span class="game-id" onclick="copyGameID(this)">Game ID :	2669320</span>
 						</div>
 
 						<div class="card__actions">
-							<a href="https://steamdatabase.s3.eu-north-1.amazonaws.com/2669320.zip" class="card__buy" type="button">File Game</a>
+							<button onclick="showDownloadWarning('https://steamdatabase.s3.eu-north-1.amazonaws.com/2669320.zip', 'EA SPORTS FC™ 25', '2669320')" class="card__buy"> File Game </button>
 
 							<a href="https://steamdb.info/app/2669320/" target="_blank" class="card__favorite" type="button">
 								<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
@@ -4842,7 +4960,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">EA SPORTS FC™ 25</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">EA SPORTS FC™ 25</a></div></h3>
 					<span>$99.99</span>
 				</div>
 
@@ -4865,7 +4983,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">Assassin’s Creed Shadows</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin’s Creed Shadows</a></div></h3>
 					<span>$71.99</span>
 				</div>
 
@@ -4888,7 +5006,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">Mafia: The Old Country</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Mafia: The Old Country</a></div></h3>
 					<span>$59.99</span>
 				</div>
 
@@ -4911,7 +5029,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">Sniper Elite: Resistance</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Sniper Elite: Resistance</a></div></h3>
 					<span>$36.99</span>
 				</div>
 
@@ -4934,7 +5052,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">Assassin's Creed Mirage</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Assassin's Creed Mirage</a></div></h3>
 					<span>$71.99</span>
 				</div>
 
@@ -4957,7 +5075,7 @@
 </svg></li></ul>
 
 				<div class="card__title">
-					<h3><a href="#">Black Myth: Wukong</a></h3>
+					<h3><div class="scrolling-text-container"><a href="#" class="scrolling-text">Black Myth: Wukong</a></div></h3>
 					<span>$69.99</span>
 				</div>
 
@@ -4974,6 +5092,39 @@
 		<!-- end carousel -->
 	</section>
 	<!-- end section -->
+	
+	<script>
+  document.querySelectorAll('.scrolling-text-container').forEach(container => {
+    const text = container.querySelector('.scrolling-text');
+
+    // قارن العرض ديال النص مع الكونتينر
+    if (text.scrollWidth > container.clientWidth) {
+      text.classList.add('animate-scroll');
+    }
+  });
+</script>
+
+
+	
+	<script>
+  function showDownloadWarning(downloadUrl, gameName, gameId) {
+    const modal = document.getElementById("warning-modal");
+    const confirmBtn = document.getElementById("download-confirm");
+
+    document.getElementById("modal-game-name").textContent = gameName;
+    document.getElementById("modal-game-id").textContent = gameId;
+    confirmBtn.href = downloadUrl;
+
+    modal.style.display = "flex";
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("warning-modal");
+    modal.style.display = "none";
+  }
+</script>
+
+
 	
 	<script>
   function copyGameID(element) {
